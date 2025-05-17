@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Button with Alert</title>
+  <style>
+    /* Set overall font and background */
+    body {
+      background-color: #f2f2f2;
+      color: #333;
+      font-family: 'Arial', sans-serif;
+      margin: 40px auto;
+      padding: 20px;
+      max-width: 800px;
+      line-height: 1.6;
+      background: white;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Headings */
+    h1 {
+      color: #0066cc;
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #004080;
+      font-size: 1.8em;
+      margin-top: 30px;
+    }
+
+    /* Paragraphs */
+    p {
+      font-size: 1.1em;
+      margin-bottom: 15px;
+    }
+
+    /* Images */
+    img {
+      display: block;
+      margin: 20px 0;
+      max-width: 100%;
+      border-radius: 8px;
+    }
+
+    /* Links */
+    a {
+      color: #cc0000;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Button Styling */
+    button {
+      background-color: #0077cc;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Welcome to My Webpage</h1>
+
+  <p>This is a webpage with a button that triggers an alert message when clicked.</p>
+
+  <!-- Button to trigger the alert -->
+  <button onclick="showAlert()">Click Me!</button>
+
+  <script>
+    // JavaScript function to show an alert
+    function showAlert() {
+      alert("Hello! You clicked the button.");
+    }
+  </script>
+
+</body>
+</html>
