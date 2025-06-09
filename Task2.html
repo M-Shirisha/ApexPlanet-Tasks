@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Responsive Contact Page with To-Do List</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+    }
+
+    /* Flexbox Navigation */
+    nav {
+      background-color: #007BFF;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    nav .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li {
+      cursor: pointer;
+    }
+
+    /* Grid Layout for Main Content */
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 40px;
+    }
+
+    .contact-info, .contact-form, .todo-list {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .form-group input:focus {
+      border-color: #007BFF;
+      outline: none;
+    }
+
+    .form-group button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: -10px;
+      margin-bottom: 10px;
+      display: none;
+    }
+
+    /* To-Do List Styling */
+    .todo-input-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .todo-input-group input {
+      flex: 1;
+    }
+
+    .todo-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 8px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .todo-item.completed {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    .todo-buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    .todo-buttons button {
+      background-color: transparent;
+      border: none;
+      color: #007BFF;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .todo-buttons button:hover {
+      color: #0056b3;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="logo">MyWebsite</div>
+    <ul>
+      <li>Home</li>
+      <li>About</li>
+      <li>Contact</li>
+    </ul>
+  </nav>
+
+  <!-- Grid Layout -->
+  <div class="container">
+    <!-- Contact Info -->
+    <div class="contact-info">
+      <h2>Get in Touch</h2>
+      <p><strong>Email:</strong> support@example.com</p>
+      <p><strong>Phone:</strong> +1 234 567 8900</p>
+      <p><strong>Address:</strong> 123 Main Street, City, Country</p>
+    </div>
+
+    <!-- Contact Form -->
+    <form class="contact-form" id="contactForm" onsubmit="return validateForm()">
+      <h2>Contact Us</h2>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your Name" />
+        <div class="error-message" id="nameError">Please enter your name.</div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Your Email" />
+        <div class="error-message" id="emailError">Please enter a valid email.</div>
+      </div>
+
+      <div class="form-group">
+        <button type="submit">Send Message</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- To-Do List Section -->
+  <div class="container">
+    <div class="todo-list">
+      <h2>To-Do List</h2>
+      <div class="todo-input-group">
+        <input type="text" id="todoInput" placeholder="Enter a new task" />
+        <button onclick="addTask()">Add</button>
+      </div>
+      <div id="todoItems"></div>
+    </div>
+  </div>
+
+  <!-- JavaScript Section -->
+  <script>
+    // Contact Form Validation
+    function validateForm() {
+      let valid = true;
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const nameError = document.getElementById("nameError");
+      const emailError = document.getElementById("emailError");
+
+      nameError.style.display = "none";
+      emailError.style.display = "none";
+
+      if (name === "") {
+        nameError.style.display = "block";
+        valid = false;
+      }
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (email === "" || !emailPattern.test(email)) {
+        emailError.style.display = "block";
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    // To-Do List Functionality
+    function addTask() {
+      const input = document.getElementById("todoInput");
+      const value = input.value.trim();
+      const list = document.getElementById("todoItems");
+
+      if (value === "") return;
+
+      const item = document.createElement("div");
+      item.className = "todo-item";
+      item.innerHTML = `
+        <span>${value}</span>
+        <div class="todo-buttons">
+          <button onclick="toggleComplete(this)">✓</button>
+          <button onclick="deleteTask(this)">✗</button>
+        </div>
+      `;
+      list.appendChild(item);
+      input.value = "";
+    }
+
+    function deleteTask(btn) {
+      const item = btn.closest(".todo-item");
+      item.remove();
+    }
+
+    function toggleComplete(btn) {
+      const item = btn.closest(".todo-item");
+      item.classList.toggle("completed");
+    }
+  </script>
+
+</body>
+</html>
