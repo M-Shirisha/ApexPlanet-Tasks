@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Products</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header><h1>🛍️ Product Showcase</h1></header>
+
+  <section>
+    <select id="categoryFilter" onchange="filterProducts()"> 
+      <option value="all">All Categories</option>
+      <option value="electronics">Electronics</option>
+      <option value="books">Books</option>
+      <option value="clothing">Clothing</option>
+    </select>
+
+    <select id="sortOption" onchange="sortProducts()">
+      <option value="rating">Sort by Rating</option>
+      <option value="price">Sort by Price</option>
+    </select>
+
+    <div id="productList"></div>
+  </section>
+
+  <script>
+    const products = [
+      { name: "Wireless Headphones", category: "electronics", price: 2999, rating: 4.6 },
+      { name: "Smartphone Stand", category: "electronics", price: 499, rating: 4.2 },
+      { name: "Novel: The Time Keeper", category: "books", price: 349, rating: 4.8 },
+      { name: "Cookbook: Quick Meals", category: "books", price: 599, rating: 4.4 },
+      { name: "Men's T-Shirt", category: "clothing", price: 799, rating: 4.1 },
+      { name: "Women's Jacket", category: "clothing", price: 1999, rating: 4.7 }
+    ];
+
+    function displayProducts(items) {
+      const list = document.getElementById('productList');
+      list.innerHTML = '';
+      items.forEach(p => {
+        const div = document.createElement('div');
+        div.innerHTML = `<strong>${p.name}</strong><br>Category: ${p.category}<br>Price: ₹${p.price}<br>Rating: ${p.rating}⭐`;
+        list.appendChild(div);
+      });
+    }
+
+    function filterProducts() {
+      const category = document.getElementById('categoryFilter').value;
+      let filtered = products;
+      if (category !== 'all') {
+        filtered = products.filter(p => p.category === category);
+      }
+      displayProducts(filtered);
+    }
+
+    function sortProducts() {
+      const sortBy = document.getElementById('sortOption').value;
+      const category = document.getElementById('categoryFilter').value;
+      let filtered = category === 'all' ? [...products] : products.filter(p => p.category === category);
+      if (sortBy === 'price') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else {
+        filtered.sort((a, b) => b.rating - a.rating);
+      }
+      displayProducts(filtered);
+    }
+
+    // Initialize
+    displayProducts(products);
+  </script>
+</body>
+</html>
